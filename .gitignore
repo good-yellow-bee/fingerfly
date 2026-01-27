@@ -1,4 +1,25 @@
+# Node
 node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Next.js
 .next
-.env.local
+out
+
+# Env
+.env
+.env.*
+!.env.example
+
+# OS
 .DS_Store
+
+# Editor
+.vscode
+.idea
+
+# Misc
+*.log
