@@ -18,10 +18,10 @@ npm run dev
 Open `http://localhost:3004`.
 
 ## Lesson routes
-- `/trening/1-podstawy` (Basics)
-- `/trening/2-litery` (Letters)
-- `/trening/12-slowa` (Words)
-- `/trening/11-teksty` (Texts)
+- `/lesson/1-basics` (Basics)
+- `/lesson/2-letters` (Letters)
+- `/lesson/12-words` (Words)
+- `/lesson/11-texts` (Texts)
 
 ## Local records
 Records are saved to `data/records.json` via a simple API at `/api/records`.

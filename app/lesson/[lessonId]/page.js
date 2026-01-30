@@ -33,7 +33,7 @@ export default function LessonPage({ params }) {
           <Link className="button button--ghost" href="/">
             All lessons
           </Link>
-          <Link className="button" href={`/trening/${getNextLessonId(lesson.id)}`}>
+          <Link className="button" href={`/lesson/${getNextLessonId(lesson.id)}`}>
             Next lesson
           </Link>
         </div>

@@ -1,6 +1,6 @@
 export const lessons = [
   {
-    id: "1-podstawy",
+    id: "1-basics",
     title: "Basics",
     type: "basics",
     description: "Home row drills, gentle rhythm, and finger awareness.",
@@ -9,7 +9,7 @@ export const lessons = [
       "asdf jkl; asdf jkl;  a s d f  j k l ;  fjfj dkdk slsl a;a;  asdfjkl;  fjdk sl; a;sl dkfj  steady hands, light touch."
   },
   {
-    id: "2-litery",
+    id: "2-letters",
     title: "Letters",
     type: "letters",
     description: "Top-row letter drills with gradual expansion.",
@@ -30,7 +30,7 @@ export const lessons = [
       "qaz wsx edc rfv tgb yhn ujm ik, ol. p;/"
   },
   {
-    id: "11-teksty",
+    id: "11-texts",
     title: "Texts",
     type: "texts",
     description: "Short paragraphs to build flow and endurance.",
@@ -39,7 +39,7 @@ export const lessons = [
       "The quiet keyboard is a small workshop. Each key is a lever, each press a promise. Keep your eyes on the screen, breathe steadily, and let the words arrive. Speed comes later; clarity comes first."
   },
   {
-    id: "12-slowa",
+    id: "12-words",
     title: "Words",
     type: "words",
     description: "Common English words for clean, consistent accuracy.",

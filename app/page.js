@@ -19,10 +19,10 @@ export default function HomePage() {
             Practice with clean lessons, instant feedback, and a calm, intentional pace.
           </p>
           <div className="hero__actions">
-            <Link className="button" href="/trening/1-podstawy">
+            <Link className="button" href="/lesson/1-basics">
               Start Basics
             </Link>
-            <Link className="button button--ghost" href="/trening/12-slowa">
+            <Link className="button button--ghost" href="/lesson/12-words">
               Jump to Words
             </Link>
           </div>
@@ -53,7 +53,7 @@ export default function HomePage() {
         </div>
         <div className="lesson-grid">
           {lessons.map((lesson) => (
-            <Link className="lesson-card" key={lesson.id} href={`/trening/${lesson.id}`}>
+            <Link className="lesson-card" key={lesson.id} href={`/lesson/${lesson.id}`}>
               <h3>{lesson.title}</h3>
               <p>{lesson.description}</p>
               <span className="lesson-card__cta">Open lesson</span>
