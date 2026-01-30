@@ -16,10 +16,10 @@ export default function RootLayout({ children }) {
                 Fingerfly
               </a>
               <nav className="nav">
-                <a href="/trening/1-podstawy">Basics</a>
-                <a href="/trening/2-litery">Letters</a>
-                <a href="/trening/12-slowa">Words</a>
-                <a href="/trening/11-teksty">Texts</a>
+                <a href="/lesson/1-basics">Basics</a>
+                <a href="/lesson/2-letters">Letters</a>
+                <a href="/lesson/12-words">Words</a>
+                <a href="/lesson/11-texts">Texts</a>
               </nav>
             </div>
           </header>
