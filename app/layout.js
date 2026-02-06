@@ -1,3 +1,4 @@
+import Link from "next/link";
 import "./globals.css";
 
 export const metadata = {
@@ -12,14 +13,14 @@ export default function RootLayout({ children }) {
         <div className="page">
           <header className="site-header">
             <div className="container site-header__inner">
-              <a className="brand" href="/">
+              <Link className="brand" href="/">
                 Fingerfly
-              </a>
+              </Link>
               <nav className="nav">
-                <a href="/lesson/1-basics">Basics</a>
-                <a href="/lesson/2-letters">Letters</a>
-                <a href="/lesson/12-words">Words</a>
-                <a href="/lesson/11-texts">Texts</a>
+                <Link href="/lesson/1-basics">Basics</Link>
+                <Link href="/lesson/2-letters">Letters</Link>
+                <Link href="/lesson/12-words">Words</Link>
+                <Link href="/lesson/11-texts">Texts</Link>
               </nav>
             </div>
           </header>

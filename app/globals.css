@@ -87,6 +87,11 @@ body {
   letter-spacing: 0.5px;
 }
 
+.brand:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
 .nav {
   display: flex;
   gap: 20px;
@@ -101,6 +106,11 @@ body {
 
 .nav a:hover {
   color: var(--ink);
+}
+
+.nav a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
 }
 
 main {
@@ -159,6 +169,11 @@ main {
 
 .button:hover {
   transform: translateY(-2px);
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--accent-dark);
+  outline-offset: 3px;
 }
 
 .button--ghost {
@@ -228,6 +243,12 @@ main {
 
 .lesson-card:hover {
   transform: translateY(-4px);
+  border-color: var(--accent);
+}
+
+.lesson-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
   border-color: var(--accent);
 }
 
@@ -372,6 +393,11 @@ main {
   font-family: "Space Grotesk", system-ui, sans-serif;
   resize: vertical;
   background: #fff;
+}
+
+.trainer__input textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  border-color: var(--accent);
 }
 
 .trainer__finish {

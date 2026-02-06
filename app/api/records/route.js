@@ -32,21 +32,29 @@ export async function POST(request) {
   const payload = await request.json();
   const { lessonId, wpm, accuracy, durationSeconds } = payload || {};
 
-  if (!lessonId || typeof wpm !== "number" || typeof accuracy !== "number") {
+  if (
+  !lessonId ||
+  !Number.isFinite(wpm) || wpm < 0 || wpm > 500 ||
+  !Number.isFinite(accuracy) || accuracy < 0 || accuracy > 100
+) {
     return new Response("Invalid payload", { status: 400 });
   }
 
   const records = await readRecords();
   const record = {
-    id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    id: crypto.randomUUID(),
     lessonId,
     wpm,
     accuracy,
-    durationSeconds: typeof durationSeconds === "number" ? durationSeconds : 0,
+    durationSeconds: Number.isFinite(durationSeconds) && durationSeconds >= 0 && durationSeconds <= 86400 ? durationSeconds : 0,
     createdAt: new Date().toISOString()
   };
 
   records.push(record);
+  const MAX_RECORDS = 500;
+  if (records.length > MAX_RECORDS) {
+    records.splice(0, records.length - MAX_RECORDS);
+  }
   await writeRecords(records);
 
   return Response.json({ record });

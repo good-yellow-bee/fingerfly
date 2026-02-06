@@ -25,6 +25,7 @@ export default function TypingTrainer({ content, mode, lessonId }) {
   const [records, setRecords] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
   const inputRef = useRef(null);
+  const finalMetricsRef = useRef(null);
 
   useEffect(() => {
     if (!startTime || isFinished) {
@@ -44,6 +45,7 @@ export default function TypingTrainer({ content, mode, lessonId }) {
     setIsFinished(false);
     setRecords([]);
     setIsSaving(false);
+    finalMetricsRef.current = null;
   }, [lessonId, targetText]);
 
   useEffect(() => {
@@ -52,8 +54,7 @@ export default function TypingTrainer({ content, mode, lessonId }) {
       .then((response) => response.json())
       .then((data) => {
         if (isActive && Array.isArray(data.records)) {
-          const lessonRecords = data.records.filter((record) => record.lessonId === lessonId);
-          setRecords(lessonRecords.slice(-5).reverse());
+          setRecords(data.records.slice(-5).reverse());
         }
       })
       .catch(() => {
@@ -74,6 +75,18 @@ export default function TypingTrainer({ content, mode, lessonId }) {
     const nextValue = value.slice(0, targetText.length);
     setInputValue(nextValue);
     if (nextValue.length >= targetText.length) {
+      const elapsed = startTime ? (Date.now() - startTime) / 1000 : 0;
+      let correct = 0;
+      for (let i = 0; i < nextValue.length; i += 1) {
+        if (nextValue[i] === targetText[i]) correct += 1;
+      }
+      const mins = Math.max(elapsed / 60, 1 / 60);
+      const acc = nextValue.length > 0 ? (correct / nextValue.length) * 100 : 100;
+      finalMetricsRef.current = {
+        wpm: Number(((correct / WPM_DIVISOR) / mins).toFixed(1)),
+        accuracy: Number(acc.toFixed(1)),
+        durationSeconds: Math.round(elapsed)
+      };
       setIsFinished(true);
     }
   };
@@ -110,19 +123,23 @@ export default function TypingTrainer({ content, mode, lessonId }) {
     };
   }, [inputValue, targetText, elapsedSeconds]);
 
+  const chars = useMemo(() => targetText.split(""), [targetText]);
+
   useEffect(() => {
-    if (!isFinished || isSaving || !targetText) {
+    if (!isFinished || isSaving || !targetText || !finalMetricsRef.current) {
       return;
     }
+    const saved = finalMetricsRef.current;
+    finalMetricsRef.current = null;
     setIsSaving(true);
     fetch("/api/records", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         lessonId,
-        wpm: Number(metrics.wpm.toFixed(1)),
-        accuracy: Number(metrics.accuracy.toFixed(1)),
-        durationSeconds: Math.round(elapsedSeconds)
+        wpm: saved.wpm,
+        accuracy: saved.accuracy,
+        durationSeconds: saved.durationSeconds
       })
     })
       .then((response) => response.json())
@@ -131,8 +148,9 @@ export default function TypingTrainer({ content, mode, lessonId }) {
           setRecords((prev) => [data.record, ...prev].slice(0, 5));
         }
       })
+      .catch((error) => console.error("Failed to save record:", error))
       .finally(() => setIsSaving(false));
-  }, [isFinished, isSaving, metrics, lessonId, elapsedSeconds, targetText]);
+  }, [isFinished, isSaving, lessonId, targetText]);
 
   return (
     <div className="trainer">
@@ -171,7 +189,7 @@ export default function TypingTrainer({ content, mode, lessonId }) {
 
       <div className="trainer__panel" onClick={() => inputRef.current?.focus()}>
         <p className="trainer__text" aria-label="Typing target">
-          {targetText.split("").map((char, index) => {
+          {chars.map((char, index) => {
             let className = "char";
             if (index < inputValue.length) {
               className += inputValue[index] === char ? " char--correct" : " char--incorrect";
@@ -179,7 +197,7 @@ export default function TypingTrainer({ content, mode, lessonId }) {
               className += " char--current";
             }
             return (
-              <span className={className} key={`${char}-${index}`}>
+              <span className={className} key={index}>
                 {char === " " ? "\u00A0" : char}
               </span>
             );
