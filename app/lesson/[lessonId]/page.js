@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import TypingTrainer from "../../../components/TypingTrainer";
 import { getLessonById, lessons } from "../../../data/lessons";
 
@@ -6,19 +7,20 @@ export function generateStaticParams() {
   return lessons.map((lesson) => ({ lessonId: lesson.id }));
 }
 
+export function generateMetadata({ params }) {
+  const lesson = getLessonById(params.lessonId);
+  if (!lesson) return {};
+  return {
+    title: `${lesson.title} — Fingerfly Typing`,
+    description: lesson.description
+  };
+}
+
 export default function LessonPage({ params }) {
   const lesson = getLessonById(params.lessonId);
 
   if (!lesson) {
-    return (
-      <section className="lesson">
-        <h1>Lesson not found</h1>
-        <p>Please head back to the lesson list and try again.</p>
-        <Link className="button" href="/">
-          Back to home
-        </Link>
-      </section>
-    );
+    notFound();
   }
 
   return (
